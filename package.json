@@ -1,17 +1,17 @@
 {
-  "name": "footbot",
+"name": "footbot",
+"version": "1.0.0",
   "description": "",
-  "main": "main.js",
-  "scripts": {
-    "dev": "nodemon main.js",
-    "start": "node main.js"
-  },
-  "author": "Denys Hlushkov",
-  "license": "MIT",
-  "version": "1.0.0",
-  "keywords": [],
+  "main": "index.js",
   "dependencies": {
     "node-telegram-bot-api": "^0.66.0",
     "nodemon": "^3.1.10"
-  }
+  },
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Denys Hlushkov",
+  "license": "MIT"
 }
