@@ -1,10 +1,10 @@
 const telegramApi = require('node-telegram-bot-api');
-
+const {gameOptions} = require('./options.js');
 const token = '8100310935:AAEW1lrN8JYe95zIqG-Su7HWvxel60fSZ4Q';
 
 const bot = new telegramApi(token, {polling: true});
 
-const data = {};
+const chats = {};
 
 const start = () => {
     bot.setMyCommands([
@@ -25,13 +25,25 @@ const start = () => {
             return bot.sendMessage(chatId, `Тебе звати ${msg.from.first_name} ${msg.from.last_name}`);
         }
         if (text === '/game'){
-            await bot.sendMessage(chatId, `Я загадав число від 0 до 9`);
+            await bot.sendMessage(chatId, 'Я загадав число від 0 до 9');
             const randNum = Math.floor(Math.random() * 10);
-            data[chatId] = randNum;
-            return bot.sendMessage(chatId, `Вгадай`);
+            chats[chatId] = randNum;
+            return bot.sendMessage(chatId, 'Вгадай', gameOptions);
         }
-        return bot.sendMessage(chatId, `Напиши щось інше`);
+        return bot.sendMessage(chatId, 'Напиши щось інше');
     });
+
+    bot.on('callback_query', async msg => {
+        const data = msg.data;
+        const chatId = msg.message.chat.id;
+        
+        if (data === chats[chatId]){
+            return bot.sendMessage(`Ти відгадав цифру ${chats[chatId]}`);
+        }
+        else {
+            return bot.sendMessage(`Ти невгадав цифру ${chats[chatId]}`);
+        }
+    })
 };
 
 start();
